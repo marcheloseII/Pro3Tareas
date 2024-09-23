@@ -15,23 +15,20 @@ public class ProductRestController {
     @Autowired
     private ProductRepository productRepository;
 
-    // Listar todos los productos
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN', 'USER')")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // Registrar un nuevo producto
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public Product addProduct(@RequestBody Product product) {
         return productRepository.save(product);
     }
 
-    // Actualizar un producto existente
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return productRepository.findById(id)
                 .map(existingProduct -> {
@@ -48,9 +45,8 @@ public class ProductRestController {
                 });
     }
 
-    // Borrar un producto por ID
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public void deleteProduct(@PathVariable Long id) {
         productRepository.deleteById(id);
     }

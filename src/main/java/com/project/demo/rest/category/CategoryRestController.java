@@ -14,24 +14,21 @@ public class CategoryRestController {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    // Listar todas las categorías
+    
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN', 'USER')")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    // Registrar una nueva categoría
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public Category addCategory(@RequestBody Category category) {
         return categoryRepository.save(category);
     }
 
-    // Actualizar una categoría existente
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
         return categoryRepository.findById(id)
                 .map(existingCategory -> {
@@ -45,9 +42,8 @@ public class CategoryRestController {
                 });
     }
 
-    // Borrar una categoría por ID
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
     public void deleteCategory(@PathVariable Long id) {
         categoryRepository.deleteById(id);
     }
