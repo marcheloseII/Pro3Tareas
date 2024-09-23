@@ -16,19 +16,19 @@ public class ProductRestController {
     private ProductRepository productRepository;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'USER')")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Product addProduct(@RequestBody Product product) {
         return productRepository.save(product);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return productRepository.findById(id)
                 .map(existingProduct -> {
@@ -46,7 +46,7 @@ public class ProductRestController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN_ROLE')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public void deleteProduct(@PathVariable Long id) {
         productRepository.deleteById(id);
     }
