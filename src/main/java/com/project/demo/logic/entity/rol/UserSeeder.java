@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class UserSeeder implements ApplicationListener<ContextRefreshedEvent> {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
 
-    public AdminSeeder(
+    public UserSeeder(
             RoleRepository roleRepository,
             UserRepository  userRepository,
             PasswordEncoder passwordEncoder
@@ -55,4 +55,5 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
 
         userRepository.save(user);
     }
+
 }
